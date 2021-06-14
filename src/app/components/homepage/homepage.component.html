@@ -1,0 +1,63 @@
+<div class="center-box">
+    <img src="/assets/logo/trui.png" alt="logo" id="logo" class="center-object">
+    <div class="form-box">
+        <h1 class="center-object"><strong>Wypełnij formularz</strong></h1>
+        <h3 class="center-object">Skontaktujemy się z Tobą najszybciej jak to będzie możliwe</h3>
+        <form class="contact-form" [formGroup]="contactForm">
+            <mat-form-field [floatLabel]="'always'" class="custom-form">
+                <mat-label><strong>Nazwa firmy / Imię i nazwisko</strong></mat-label>
+                <input matInput placeholder="np. Apple" formControlName="name" required>
+            </mat-form-field>
+            <mat-form-field [floatLabel]="'always'" class="custom-form"
+                [ngClass]="{'custom-form-error': contactForm.controls['nip'].invalid}">
+                <mat-label><strong>Numer NIP</strong></mat-label>
+                <input matInput placeholder="123-45-67-890" formControlName="nip" required>
+            </mat-form-field>
+            <mat-form-field [floatLabel]="'always'" class="custom-form">
+                <mat-label><strong>E-mail</strong></mat-label>
+                <input matInput placeholder="example@email.com" formControlName="email" type="email" required email>
+            </mat-form-field>
+            <mat-form-field [floatLabel]="'always'" class="custom-form">
+                <mat-label><strong>Temat</strong></mat-label>
+                <mat-select formControlName="subject" style="width: 100%" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let subject of subjects" [value]="subject">
+                        {{subject}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="custom-form" id="carLicense">
+                <mat-label><strong>Czy posiadasz prawo jazdy kat.B?</strong></mat-label>
+                <mat-radio-group aria-label="Select an option" formControlName="driverLicense">
+                    <mat-radio-button value="0" style="padding: 10px">Tak</mat-radio-button>
+                    <mat-radio-button value="1" style="padding: 10px">Nie</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <mat-form-field [floatLabel]="'always'" class="custom-form">
+                <mat-label><strong>Treść wiadomości</strong></mat-label>
+                <textarea matInput placeholder="Tu wpisz treść wiadomości" class="content" formControlName="content"
+                    id="content"></textarea>
+            </mat-form-field>
+            <section formGroupName="agreements" style="width: 100%">
+                <p class="agrements-checkbox">
+                    <mat-checkbox (change)="setAll($event.checked)" [checked]="allComplete"><strong>Zaznacz wszystkie
+                            zgody</strong>
+                    </mat-checkbox>
+                </p>
+                <p class="agrements-checkbox">
+                    <mat-checkbox (change)="updateAll()" formControlName="processing" required>Wyrażam zgodę na
+                        przetwarzanie moich danych osobowych podanych przeze mnie w powyższym formularzu w celu
+                        kontaktowym.*
+                    </mat-checkbox>
+                </p>
+                <p class="agrements-checkbox">
+                    <mat-checkbox (change)="updateAll()" formControlName="contact">Wyrażam zgodę na kontakt telefoniczny
+                        w
+                        sprawach marketingowych</mat-checkbox>
+                </p>
+            </section>
+            <button mat-flat-button class="send-button center-object" (click)="submit()"
+                [disabled]="!contactForm.valid">Wyślij wiadomosć</button>
+        </form>
+    </div>
+</div>
